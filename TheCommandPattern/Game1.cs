@@ -1,6 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+﻿global using System.Diagnostics;
+global using Microsoft.Xna.Framework;
+global using Microsoft.Xna.Framework.Graphics;
+global using Microsoft.Xna.Framework.Input;
+global using TheCommandPattern.Input;
 
 namespace TheCommandPattern
 {
@@ -8,12 +10,16 @@ namespace TheCommandPattern
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private GamePadInput gamePadInput;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+
+            gamePadInput = new GamePadInput();
         }
 
         protected override void Initialize()
@@ -33,9 +39,15 @@ namespace TheCommandPattern
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                Debug.WriteLine("________________________Exiting game...");
                 Exit();
-
+            }
             // TODO: Add your update logic here
+
+            //// Check for gamepad input
+            //gamePadInput.GetGamePadState(gameTime);
+            gamePadInput.HandleInput(gameTime);
 
             base.Update(gameTime);
         }
