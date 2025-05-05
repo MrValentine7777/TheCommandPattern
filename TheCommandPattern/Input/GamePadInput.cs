@@ -19,6 +19,7 @@ namespace TheCommandPattern.Input
             return GamePad.GetState(PlayerIndex.One);
         }
 
+        // this is the cpp code the pattern is based off of
         //void InputHandler::handleInput()
         //{
         //    if (isPressed(BUTTON_X)) jump();
