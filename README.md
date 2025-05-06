@@ -30,7 +30,7 @@ The project implements the Command Pattern with the following components:
 ### Command Flow Diagram
 
 The following diagram illustrates how the Command Pattern is implemented in this project, showing the relationships and method calls between components:
-```scala
+```csharp
 +----------------+         +----------------+         +----------------+
 | Game1          |         | GamePadInput   |         | InputHandler   |
 +----------------+         +----------------+         +----------------+
