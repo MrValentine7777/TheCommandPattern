@@ -25,6 +25,8 @@ The project implements the Command Pattern with the following components:
 
 - `GamePadInput`: Initializes commands and connects them to the InputHandler, also contains action methods that commands call when executed
 
+- `ChangeBackgroundColorCommand`: Specialized command that directly changes the background color without going through GamePadInput, can be mapped to any gamepad button
+
 ### Command Flow Diagram
 
 The following diagram illustrates how the Command Pattern is implemented in this project, showing the relationships and method calls between components:
@@ -96,12 +98,13 @@ The following diagram illustrates how the Command Pattern is implemented in this
 
 ### Command Implementations
 
-Four concrete command classes demonstrate different actions:
+Five concrete command classes demonstrate different actions:
 
 1. `JumpCommand`: Maps to the X button, causes the character to jump and changes background to blue
 2. `FireGunCommand`: Maps to the Y button, fires the gun and changes background to yellow
 3. `SwapWeaponCommand`: Maps to the B button, swaps weapons and changes background to red
 4. `LurchIneffectivelyCommand`: Maps to the A button, causes the character to lurch and changes background to green
+5. `ChangeBackgroundColorCommand`: Specialized command that can be mapped to any gamepad button to directly change the background color
 
 ### Visual Feedback System
 
@@ -141,6 +144,7 @@ Additional keyboard support:
 3. **Reusability**: Commands can be reused across different input methods
 4. **Testability**: Commands can be tested independently of input handling
 5. **Maintainability**: Each command has a single responsibility with clear boundaries
+6. **Composability**: Commands can be parameterized and configured at runtime (as seen in ChangeBackgroundColorCommand)
 
 ## Project Structure
 
