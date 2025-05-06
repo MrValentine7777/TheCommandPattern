@@ -25,6 +25,70 @@ The project implements the Command Pattern with the following components:
 
 - `GamePadInput`: Initializes commands and connects them to the InputHandler, also contains action methods that commands call when executed
 
+### Command Flow Diagram
++----------------+         +----------------+         +----------------+
+| Game1          |         | GamePadInput    |         | InputHandler    |
++----------------+         +----------------+         +----------------+
+| Update()       |-------->| HandleInput()   |-------->| HandleInput()   |
++----------------+         +----------------+         +----------------+
+                                                              |
+                                                              |
+                                                              v
++---------------------------------------------------------+
+|                   ICommand Interface                     |
++---------------------------------------------------------+
+| HandleInput(currentState, previousState) : bool         |
+| Execute()                                               |
+| ChangeBackgroundColor(color)                            |
++---------------------------------------------------------+
+          ^                ^               ^              ^
+          |                |               |              |
++-----------------+ +--------------+ +-------------+ +-----------------+
+| JumpCommand     | | FireGunCmd   | | SwapWeapon | | LurchCommand    |
++-----------------+ +--------------+ +-------------+ +-----------------+
+| - _gamePadInput | |              | |             | |                 |
++-----------------+ +--------------+ +-------------+ +-----------------+
+| Execute() {     | | Execute() {  | | Execute() { | | Execute() {     |
+|   Jump()        | |   FireGun()  | |   Swap()    | |   Lurch()       |
+|   ChangeBG(Blue)| |   ChangeBG() | |   ChangeBG()| |   ChangeBG()    |
+| }               | | }            | | }           | | }               |
++-----------------+ +--------------+ +-------------+ +-----------------+
+          |                                              |
+          v                                              v
++------------------------------------------------------+
+|                    GamePadInput                       |
++------------------------------------------------------+
+| Jump() -> MessageManager.DisplayMessage("Jumped!")    |
+| SwapWeapon() -> MessageManager.DisplayMessage(...)    |
+| LurchIneffectively() -> MessageManager.DisplayMessage()|
++------------------------------------------------------+
+                          |
+                          v
++------------------------------------------------------+
+|                    BackgroundManager                   |
++------------------------------------------------------+
+| ChangeColor(BackgroundColor) -> Sets game background   |
++------------------------------------------------------+
+                          |
+                          v
++------------------------------------------------------+
+|                    MessageManager                      |
++------------------------------------------------------+
+| DisplayMessage(string) -> Shows text on screen         |
++------------------------------------------------------+
+## Command Pattern Flow
+
+1. Game1.Update() calls GamePadInput.HandleInput()
+2. GamePadInput delegates to InputHandler.HandleInput()
+3. InputHandler checks button states and calls command.HandleInput() for each button
+4. Each command's HandleInput() detects if its button was pressed
+5. If pressed, the command's Execute() method runs which:
+   - Calls back to GamePadInput methods (Jump, SwapWeapon, etc.)
+   - Changes background color via BackgroundManager
+6. GamePadInput methods display messages via MessageManager
+7. BackgroundManager updates the game background color
+8. MessageManager shows text feedback on screen
+
 ### Command Implementations
 
 Four concrete command classes demonstrate different actions:
