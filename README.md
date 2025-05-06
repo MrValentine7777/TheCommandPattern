@@ -30,17 +30,17 @@ The project implements the Command Pattern with the following components:
 ### Command Flow Diagram
 
 The following diagram illustrates how the Command Pattern is implemented in this project, showing the relationships and method calls between components:
-```csharp
+```scala
 +----------------+         +----------------+         +----------------+
-| Game1          |         | GamePadInput    |         | InputHandler    |
+| Game1          |         | GamePadInput   |         | InputHandler   |
 +----------------+         +----------------+         +----------------+
-| Update()       |-------->| HandleInput()   |-------->| HandleInput()   |
+| Update()       |-------->| HandleInput()  |-------->| HandleInput()  |
 +----------------+         +----------------+         +----------------+
                                                               |
                                                               |
                                                               v
 +---------------------------------------------------------+
-|                   ICommand Interface                     |
+|                   ICommand Interface                    |
 +---------------------------------------------------------+
 | HandleInput(currentState, previousState) : bool         |
 | Execute()                                               |
@@ -49,7 +49,7 @@ The following diagram illustrates how the Command Pattern is implemented in this
           ^                ^               ^              ^
           |                |               |              |
 +-----------------+ +--------------+ +-------------+ +-----------------+
-| JumpCommand     | | FireGunCmd   | | SwapWeapon | | LurchCommand    |
+| JumpCommand     | | FireGunCmd   | | SwapWeapon | | LurchCommand     |
 +-----------------+ +--------------+ +-------------+ +-----------------+
 | - _gamePadInput | |              | |             | |                 |
 +-----------------+ +--------------+ +-------------+ +-----------------+
@@ -60,26 +60,26 @@ The following diagram illustrates how the Command Pattern is implemented in this
 +-----------------+ +--------------+ +-------------+ +-----------------+
           |                                              |
           v                                              v
-+------------------------------------------------------+
-|                    GamePadInput                       |
-+------------------------------------------------------+
-| Jump() -> MessageManager.DisplayMessage("Jumped!")    |
-| SwapWeapon() -> MessageManager.DisplayMessage(...)    |
++--------------------------------------------------------+
+|                    GamePadInput                        |
++--------------------------------------------------------+
+| Jump() -> MessageManager.DisplayMessage("Jumped!")     |
+| SwapWeapon() -> MessageManager.DisplayMessage(...)     |
 | LurchIneffectively() -> MessageManager.DisplayMessage()|
++--------------------------------------------------------+
+                          |
+                          v
++------------------------------------------------------+
+|                    BackgroundManager                 |
++------------------------------------------------------+
+| ChangeColor(BackgroundColor) -> Sets game background |
 +------------------------------------------------------+
                           |
                           v
 +------------------------------------------------------+
-|                    BackgroundManager                   |
+|                    MessageManager                    |
 +------------------------------------------------------+
-| ChangeColor(BackgroundColor) -> Sets game background   |
-+------------------------------------------------------+
-                          |
-                          v
-+------------------------------------------------------+
-|                    MessageManager                      |
-+------------------------------------------------------+
-| DisplayMessage(string) -> Shows text on screen         |
+| DisplayMessage(string) -> Shows text on screen       |
 +------------------------------------------------------+
 ```
 
