@@ -23,7 +23,7 @@ The project implements the Command Pattern with the following components:
 
 - `InputHandler`: Manages the input-to-command mapping and delegates button presses to the appropriate commands
 
-- `GamePadInput`: Initializes commands and connects them to the InputHandler, also contains some of the action methods that commands call
+- `GamePadInput`: Initializes commands and connects them to the InputHandler, also contains action methods that commands call when executed
 
 ### Command Implementations
 
@@ -37,7 +37,20 @@ Four concrete command classes demonstrate different actions:
 ### Visual Feedback System
 
 - `BackgroundManager`: Singleton that manages the background color state
+  - Provides a centralized interface for changing the game's background color
+  - Uses the `Colors` utility class to map enum values to XNA Color objects
+
 - `MessageManager`: Singleton that handles displaying text messages on screen
+  - Manages message queue, display duration, and rendering
+  - Provides a unified interface for all commands to display text feedback
+
+### Design Patterns
+
+This project demonstrates multiple design patterns working together:
+
+1. **Command Pattern**: Encapsulates actions as objects to decouple input from execution
+2. **Singleton Pattern**: Used for BackgroundManager and MessageManager to provide global access points
+3. **Factory Method Pattern**: The `Colors.GetColor()` method acts as a simple factory for creating color objects
 
 ## Controller Mapping
 
@@ -49,12 +62,27 @@ The gamepad controls are mapped as follows:
 - **A Button**: Lurch Ineffectively (Green background)
 - **Back/ESC**: Exit game
 
+Additional keyboard support:
+- **ESC Key**: Exit game
+
 ## Benefits of the Command Pattern in this Project
 
 1. **Decoupling**: Input handling is completely separated from the action execution
 2. **Extensibility**: New commands can be added without modifying existing code
 3. **Reusability**: Commands can be reused across different input methods
 4. **Testability**: Commands can be tested independently of input handling
+5. **Maintainability**: Each command has a single responsibility with clear boundaries
+
+## Project Structure
+
+- **Input**: Contains input handling and command implementations
+  - **Commands**: Contains the ICommand interface and concrete command classes
+- **Background**: Contains background color management and color definitions
+- **UI**: Contains message display functionality
+
+## Code Organization
+
+The codebase uses global usings to streamline imports across the project.
 
 ## Running the Project
 
@@ -64,16 +92,9 @@ The gamepad controls are mapped as follows:
 4. Build and run the project
 5. Press gamepad buttons to see the different commands in action
 
-## Project Structure
-
-- **Input**: Contains input handling and command implementations
-  - **Commands**: Contains the ICommand interface and concrete command classes
-- **Background**: Contains background color management
-- **UI**: Contains message display functionality
-
 ## Development Notes
 
-This project was developed with the assistance of GitHub Copilot X, which helped generate and refine code implementations, structure the architecture, and create documentation.
+This project was developed with the assistance of GitHub Copilot X, which helped generate and refine code implementations, structure the architecture, and create documentation. The extensive use of XML comments throughout the codebase makes it easy to understand the relationships between components.
 
 ## References
 
