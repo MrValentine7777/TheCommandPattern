@@ -1,138 +1,66 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// TheCommandPattern\Input\GamePadInput.cs
+using System.Diagnostics;
+using Microsoft.Xna.Framework;
+using TheCommandPattern.Background;
+using TheCommandPattern.Input.Commands;
+using Microsoft.Xna.Framework.Input;
+using TheCommandPattern.UI;
 
 namespace TheCommandPattern.Input
 {
-    internal class GamePadInput
+    public class GamePadInput
     {
-        // Store previous state to detect button releases
-        private GamePadState _previousState;
+        private InputHandler _inputHandler;
 
-        // get the gamepad player one state
-        public GamePadState GetGamePadState(GameTime gameTime)
+        public GamePadInput()
         {
-            Debug.WriteLine("________________________GamePadState: " + GamePad.GetState(PlayerIndex.One).ToString());
+            // Create command instances with reference to this GamePadInput instance
+            var jumpCommand = new JumpCommand(this);
+            var fireGunCommand = new FireGunCommand();
+            var swapWeaponCommand = new SwapWeaponCommand(this);
+            var lurchCommand = new LurchIneffectivelyCommand(this);
 
-            return GamePad.GetState(PlayerIndex.One);
+            // Initialize the InputHandler with concrete command implementations
+            // Use the specific command classes for each button
+            _inputHandler = new InputHandler(
+                jumpCommand,         // X button
+                fireGunCommand,      // Y button
+                lurchCommand,        // A button
+                swapWeaponCommand    // B button
+            );
         }
 
-        // this is the cpp code the pattern is based off of
-        //void InputHandler::handleInput()
-        //{
-        //    if (isPressed(BUTTON_X)) jump();
-        //    else if (isPressed(BUTTON_Y)) fireGun();
-        //    else if (isPressed(BUTTON_B)) swapWeapon();
-        //    else if (isPressed(BUTTON_Y)) lurchIneffectively();
-        //}
-
-        // Handle input using MonoGame's GamePadState
+        // Handle input using the command pattern
         public void HandleInput(GameTime gameTime)
         {
-            GamePadState currentState = GamePad.GetState(PlayerIndex.One);
-
-            // Check for new button presses (pressed now but not in previous frame)
-            if (IsNewButtonPress(currentState.Buttons.X, _previousState.Buttons.X))
-                Jump();
-            else if (IsNewButtonPress(currentState.Buttons.Y, _previousState.Buttons.Y))
-                FireGun();
-            else if (IsNewButtonPress(currentState.Buttons.B, _previousState.Buttons.B))
-                SwapWeapon();
-            else if (IsNewButtonPress(currentState.Buttons.A, _previousState.Buttons.A))
-                LurchIneffectively();
-
-            // Store current state for next frame comparison
-            _previousState = currentState;
+            _inputHandler.HandleInput(gameTime);
         }
 
-        // Helper method to check if a button is pressed
-        private bool IsPressed(ButtonState buttonState)
+        // Add Jump method that will be called by JumpCommand
+        public void Jump()
         {
-            return buttonState == ButtonState.Pressed;
+            Debug.WriteLine("Character jumped!");
+            
+            // Display the message on screen (if MessageManager is used in the project)
+            MessageManager.Instance?.DisplayMessage("Character jumped!");
         }
 
-        // Helper method to detect new button presses
-        private bool IsNewButtonPress(ButtonState currentState, ButtonState previousState)
+        // Add SwapWeapon method that will be called by SwapWeaponCommand
+        public void SwapWeapon()
         {
-            // Only return true if button is pressed now but wasn't pressed in previous frame
-            return currentState == ButtonState.Pressed && previousState == ButtonState.Released;
+            Debug.WriteLine("Weapon swapped!");
+            
+            // Display the message on screen
+            MessageManager.Instance?.DisplayMessage("Weapon swapped!");
         }
 
-        private void Jump()
+        // Add LurchIneffectively method that will be called by LurchIneffectivelyCommand
+        public void LurchIneffectively()
         {
-            Debug.WriteLine("Player jumped");
-            // Implementation for jump action
+            Debug.WriteLine("Character lurched... ineffectively!");
+            
+            // Display the message on screen
+            MessageManager.Instance?.DisplayMessage("Character lurched... ineffectively!");
         }
-
-        private void FireGun()
-        {
-            Debug.WriteLine("Player fired gun");
-            // Implementation for firing gun action
-        }
-
-        private void SwapWeapon()
-        {
-            Debug.WriteLine("Player swapped weapon");
-            // Implementation for swapping weapon action
-        }
-
-        private void LurchIneffectively()
-        {
-            Debug.WriteLine("Player lurched ineffectively");
-            // Implementation for lurching ineffectively action
-        }
-
-        class Command
-        {
-            public:
-                virtual ~Command() { }
-            virtual void execute() = 0;
-        };
-
-        class JumpCommand : public Command
-        {
-            public:
-                virtual void execute() jump();
-        };
-
-        class FireCommand : public Command
-        {
-                    public:
-                        virtual void execute() fireGun();
-                };
-
-class SwapWeaponCommand : public Command
-{
-            public:
-                virtual void execute() swapWeapon();
-        };
-
-class LurchIneffectivelyCommand : public Command
-{
-                public:
-                 virtual void execute() lurchIneffectively();
-          };
-
-class InputHandler
-{
-    public:
-        void handleInput();
-
-    private:
-        Command* buttonX_;
-    Command* buttonY_;
-    Command* buttonA_;
-    Command* buttonB_;
-};
-
-void InputHandler::handleInput()
-        {
-            if (isPressed(BUTTON_X)) buttonX_->execute();
-            else if (isPressed(BUTTON_Y)) buttonY_->execute();
-            else if (isPressed(BUTTON_B)) buttonB_->execute();
-            else if (isPressed(BUTTON_A)) buttonA_->execute();
-}
     }
 }
