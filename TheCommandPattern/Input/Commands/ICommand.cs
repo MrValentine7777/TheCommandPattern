@@ -9,7 +9,6 @@ namespace TheCommandPattern.Input.Commands
     {
         void Execute();
         bool HandleInput(GamePadState currentState, GamePadState previousState);
-        void HandleButtonInput(GamePadState currentState, GamePadState previousState);
         void ChangeBackgroundColor(Color color);
     }
 }

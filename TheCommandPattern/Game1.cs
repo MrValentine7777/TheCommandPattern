@@ -60,8 +60,6 @@ namespace TheCommandPattern
             }
             // TODO: Add your update logic here
 
-            //// Check for gamepad input
-            //gamePadInput.GetGamePadState(gameTime);
             gamePadInput.HandleInput(gameTime);
             
             // Update message manager

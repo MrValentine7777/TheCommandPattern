@@ -37,12 +37,6 @@ namespace TheCommandPattern.Input.Commands
             return false;
         }
 
-        public void HandleButtonInput(GamePadState currentState, GamePadState previousState)
-        {
-            // Implementation of interface method
-            HandleInput(currentState, previousState);
-        }
-
         public void ChangeBackgroundColor(Color color)
         {
             // Convert from Color to BackgroundColor enum
