@@ -26,6 +26,9 @@ The project implements the Command Pattern with the following components:
 - `GamePadInput`: Initializes commands and connects them to the InputHandler, also contains action methods that commands call when executed
 
 ### Command Flow Diagram
+
+The following diagram illustrates how the Command Pattern is implemented in this project, showing the relationships and method calls between components:
+```csharp
 +----------------+         +----------------+         +----------------+
 | Game1          |         | GamePadInput    |         | InputHandler    |
 +----------------+         +----------------+         +----------------+
@@ -76,6 +79,8 @@ The project implements the Command Pattern with the following components:
 +------------------------------------------------------+
 | DisplayMessage(string) -> Shows text on screen         |
 +------------------------------------------------------+
+```
+
 ## Command Pattern Flow
 
 1. Game1.Update() calls GamePadInput.HandleInput()
