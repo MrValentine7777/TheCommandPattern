@@ -39,13 +39,13 @@ The following diagram illustrates how the Command Pattern is implemented in this
                                                               |
                                                               |
                                                               v
-+---------------------------------------------------------+
-|                   ICommand Interface                    |
-+---------------------------------------------------------+
-| HandleInput(currentState, previousState) : bool         |
-| Execute()                                               |
-| ChangeBackgroundColor(color)                            |
-+---------------------------------------------------------+
+        +---------------------------------------------------------+
+        |                   ICommand Interface                    |
+        +---------------------------------------------------------+
+        | HandleInput(currentState, previousState) : bool         |
+        | Execute()                                               |
+        | ChangeBackgroundColor(color)                            |
+        +---------------------------------------------------------+
           ^                ^               ^              ^
           |                |               |              |
 +-----------------+ +--------------+ +-------------+ +-----------------+
